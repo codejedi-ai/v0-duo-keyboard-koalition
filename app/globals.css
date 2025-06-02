@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 @layer base {
   :root {
     --background: 0 0% 0%; /* Black */
@@ -9,33 +9,33 @@
 
     --card: 0 0% 0%;
     --card-foreground: 0 0% 100%;
- 
+
     --popover: 0 0% 0%;
     --popover-foreground: 0 0% 100%;
- 
+
     --primary: 39 100% 50%; /* Orange #FFA500 */
     --primary-foreground: 0 0% 100%;
- 
+
     --secondary: 0 0% 29%; /* Dark Gray #4A4A4A */
     --secondary-foreground: 0 0% 100%;
- 
+
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 70%;
- 
+
     --accent: 39 100% 50%;
     --accent-foreground: 0 0% 100%;
- 
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 39 100% 50%;
     --input: 0 0% 20%;
     --ring: 39 100% 50%;
- 
+
     --radius: 0.5rem;
   }
 }
- 
+
 @layer base {
   * {
     @apply border-border;
@@ -49,21 +49,56 @@
   .nav-link {
     @apply text-white hover:text-primary transition-colors duration-200;
   }
-  
+
   .icon {
     @apply text-primary hover:text-white transition-colors duration-200;
   }
-  
+
   .icon-trophy {
     @apply text-primary hover:scale-110 transition-all duration-200;
   }
-  
+
   .icon-secondary {
     @apply text-white hover:text-primary transition-colors duration-200;
   }
-  
+
   .icon-muted {
     @apply text-muted-foreground hover:text-primary transition-colors duration-200;
   }
 }
 
+/* Custom animations */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce-slow {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out;
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 2s infinite;
+}

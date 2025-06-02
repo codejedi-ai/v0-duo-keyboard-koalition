@@ -30,14 +30,14 @@
 ## CSS Classes
 
 ### Navigation Links
-```css
+\`\`\`css
 .nav-link {
   @apply text-white hover:text-primary transition-colors duration-200;
 }
-```
+\`\`\`
 
 ### Buttons
-```css
+\`\`\`css
 .btn-primary {
   @apply bg-primary text-white px-4 py-2 rounded hover:bg-opacity-90 transition-colors;
 }
@@ -45,4 +45,4 @@
 .btn-secondary {
   @apply bg-secondary text-white px-4 py-2 rounded hover:bg-opacity-90 transition-colors;
 }
-```
+\`\`\`

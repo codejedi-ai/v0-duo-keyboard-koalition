@@ -1,24 +1,125 @@
-import React from "react";
-import Image from "next/image";
+"use client"
+
+import { useEffect, useState } from "react"
+import Image from "next/image"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { ChevronDown } from "lucide-react"
 
 export function Hero() {
+  const [scrollY, setScrollY] = useState(0)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+    const handleScroll = () => {
+      setScrollY(window.scrollY)
+    }
+
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  const parallaxValue = scrollY * 0.4
+
+  if (!mounted) {
+    return (
+      <div className="relative w-full h-[70vh] min-h-[500px] max-h-[800px] overflow-hidden bg-black">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black z-10"></div>
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/banner.png"
+            alt="Background"
+            fill
+            priority
+            sizes="100vw"
+            style={{
+              objectFit: "cover",
+              objectPosition: "center",
+              filter: "brightness(0.7)",
+            }}
+          />
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className="relative w-full h-[50vh] bg-gradient-to-r from-black to-gray-800 flex items-center justify-center">
-      {/* Make sure content is visible despite navbar overlay */}
-      <div className="absolute inset-0 z-0">
-        {/* Background content (if any) */}
+    <div className="relative w-full h-[70vh] min-h-[500px] max-h-[800px] overflow-hidden bg-black">
+      {/* Background gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black z-10"></div>
+
+      {/* Parallax background */}
+      <div
+        className="absolute inset-0 z-0 transition-transform duration-100 ease-out"
+        style={{
+          transform: `translateY(${parallaxValue}px)`,
+        }}
+      >
         <Image
           src="/banner.png"
           alt="Background"
           fill
+          priority
           sizes="100vw"
           style={{
-            objectFit: 'cover',
-            objectPosition: 'center'
+            objectFit: "cover",
+            objectPosition: "center",
+            filter: "brightness(0.7)",
           }}
         />
       </div>
-    </div>
-  );
-}
 
+      {/* Hero content */}
+      <div className="relative z-20 h-full container mx-auto px-4 flex flex-col justify-center items-center">
+        <div className="flex flex-col items-center text-center animate-fade-in-up">
+          {/* Logo */}
+          <div className="mb-6">
+            <Image
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-PjQ7yXSb2U4BqTmLgAhrHSc15WVDmA.png"
+              alt="DKK Logo"
+              width={100}
+              height={100}
+              className="animate-pulse"
+            />
+          </div>
+
+          {/* Title */}
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4 tracking-tight">
+            <span className="text-primary">DUO KEYBOARD</span>
+            <br />
+            <span className="text-white">KOALITION</span>
+          </h1>
+
+          {/* Tagline */}
+          <p className="text-xl md:text-2xl text-gray-300 max-w-2xl mb-8">
+            A community of elite hackers pushing the boundaries of innovation
+          </p>
+
+          {/* CTA buttons */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Link href="/projects">
+              <Button size="lg" className="px-8 py-6 text-lg hover:scale-105 transition-transform duration-200">
+                Explore Projects
+              </Button>
+            </Link>
+            <Link href="https://discord.gg/6GaWZAawUc" target="_blank">
+              <Button
+                size="lg"
+                variant="outline"
+                className="px-8 py-6 text-lg border-primary text-primary hover:bg-primary/20 hover:scale-105 transition-all duration-200"
+              >
+                Join Discord
+              </Button>
+            </Link>
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce-slow">
+          <ChevronDown className="w-8 h-8 text-primary animate-bounce" />
+        </div>
+      </div>
+    </div>
+  )
+}

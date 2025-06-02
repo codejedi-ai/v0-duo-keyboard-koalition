@@ -9,6 +9,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 export const metadata: Metadata = {
   title: "Duo Keyboard Koalition",
   description: "Community of passionate hackers, coders, and tech enthusiasts",
+    generator: 'v0.dev'
 };
 
 export default function RootLayout({
