@@ -86,26 +86,29 @@ export function Hero() {
             <span className="text-primary ml-4">DUO KEYBOARD</span>
             <span className="text-white ml-4">KOALITION</span>
           </h1>
-          {/* CTA buttons */}
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Link href="/projects">
-              <Button
-                size="lg"
-                className="px-8 py-6 text-lg hover:scale-105 transition-transform duration-200"
-              >
-                Explore Projects
-              </Button>
-            </Link>
-            <Link href="https://discord.gg/6GaWZAawUc" target="_blank">
-              <Button
-                size="lg"
-                variant="outline"
-                className="px-8 py-6 text-lg border-primary text-primary hover:bg-primary/20 hover:scale-105 transition-all duration-200"
-              >
-                Join Discord
-              </Button>
-            </Link>
-          </div>
+
+{/* CTA Links Styled as Buttons */}
+<div className="flex flex-col sm:flex-row gap-4">
+  {/* Internal button-style link */}
+  <Link
+    href="/projects"
+    className="px-8 py-4 text-lg font-semibold bg-primary text-white rounded-md shadow-md hover:bg-primary/80 transition-all duration-200"
+  >
+    Explore Projects
+  </Link>
+
+  {/* External button-style link */}
+  <Link
+    href="https://discord.gg/6GaWZAawUc"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="px-8 py-4 text-lg font-semibold border-2 border-primary text-primary rounded-md shadow-md hover:bg-primary/20 transition-all duration-200"
+  >
+    Join Discord
+  </Link>
+</div>
+
+
         </div>
 
         {/* Scroll indicator */}
