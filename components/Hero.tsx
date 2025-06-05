@@ -102,9 +102,10 @@ export function Hero() {
 
   if (!mounted) {
     return (
-      <div className="relative w-full h-[70vh] min-h-[500px] max-h-[800px] overflow-hidden bg-black">
-        <Background parallaxValue={0} />
-      </div>
+    <div className="relative w-full h-[70vh] min-h-[500px] max-h-[800px] overflow-hidden bg-black">
+      <Background parallaxValue=0 />
+      <HeroContent />
+    </div>
     );
   }
 
