@@ -1,14 +1,23 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+import { authMiddleware } from '@clerk/nextjs'
 
-const isProtectedRoute = createRouteMatcher([
-  '/protected(.*)',
-  '/profile(.*)',
-  '/skills(.*)',
-  '/restricted(.*)'
-])
-
-export default clerkMiddleware((auth, req) => {
-  if (isProtectedRoute(req)) auth().protect()
+export default authMiddleware({
+  // Routes that can be accessed while signed out
+  publicRoutes: [
+    '/',
+    '/about',
+    '/goals',
+    '/projects',
+    '/events',
+    '/wins',
+    '/api/(.*)',
+    '/sign-in(.*)',
+    '/sign-up(.*)',
+  ],
+  // Routes that can always be accessed, and have
+  // no authentication information
+  ignoredRoutes: [
+    '/api/webhooks(.*)',
+  ],
 })
 
 export const config = {
