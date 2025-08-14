@@ -31,6 +31,9 @@ function Header() {
                   <Link href="/profile" className="text-white hover:text-primary">
                     Profile
                   </Link>
+                  <Link href="/restricted" className="text-white hover:text-primary">
+                    Restricted
+                  </Link>
                   <UserButton 
                     appearance={{
                       elements: {
