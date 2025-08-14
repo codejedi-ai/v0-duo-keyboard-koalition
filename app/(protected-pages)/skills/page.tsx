@@ -1,43 +1,50 @@
 'use client';
 
 import { useState } from 'react';
-import { useAuth } from '@/context/AuthContext';
+import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ProtectedContextProvider } from '@/context/ProtectedContext';
 
-export default function ProtectedPage() {
-  return (
-    <ProtectedContextProvider>
-      <SkillsContent />
-    </ProtectedContextProvider>
-  );
-}
-
-function SkillsContent() {
-  const { user } = useAuth();
+export default function SkillsPage() {
+  const { isLoaded, isSignedIn, user } = useUser();
   const router = useRouter();
   const [showJson, setShowJson] = useState(false);
+
+  if (!isLoaded) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-4">Loading...</h2>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary mx-auto"></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isSignedIn) {
+    router.push('/sign-in');
+    return null;
+  }
+
   return (
     <div className="w-full min-h-screen flex flex-col">
-      <div className="w-full overflow-x-hidden flex-grow container mx-auto px-4 py-8">
+      <div className="w-full overflow-x-hidden flex-grow container mx-auto px-4 py-8 mt-16">
         <section className="px-4 mb-16 max-w-7xl mx-auto w-full">
           <div className="max-w-3xl mx-auto mb-12">
-            <h1 className="text-3xl font-bold mb-6">Protected Content</h1>
+            <h1 className="text-3xl font-bold mb-6 text-white">Protected Content</h1>
             <p className="text-gray-400 text-lg mb-8">
               Welcome to the exclusive section of the Duo Keyboard Koalition. 
               This area is reserved for authenticated members only.
             </p>
           
             <div className="bg-gray-900 border border-gray-800 rounded-lg p-6 shadow-lg mb-8">
-              <h2 className="text-xl font-semibold mb-4">
-                Welcome, {user ? user.email : 'Guest'}
+              <h2 className="text-xl font-semibold mb-4 text-white">
+                Welcome, {user.firstName || user.emailAddresses[0]?.emailAddress}
               </h2>
               <div className="space-y-3 text-gray-400">
-                {user && (
-                  <p><span className="font-medium text-white">Email:</span> {user.email}</p>
-                )}
+                <p><span className="font-medium text-white">Name:</span> {user.firstName} {user.lastName}</p>
+                <p><span className="font-medium text-white">Email:</span> {user.emailAddresses[0]?.emailAddress}</p>
               </div>
               
               <div className="mt-6">
@@ -60,12 +67,12 @@ function SkillsContent() {
             </div>
             
             <div className="flex space-x-4">
-              <Link href="/profile" passHref >
+              <Link href="/profile" passHref>
                 <Button asChild variant="outline" size="default">
                   <a>View Profile</a>
                 </Button>
               </Link>
-              <Link href="/" passHref >
+              <Link href="/" passHref>
                 <Button asChild variant="default" size="default">
                   <a>Return to Home</a>
                 </Button>

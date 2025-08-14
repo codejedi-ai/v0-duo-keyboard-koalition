@@ -3,9 +3,11 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { AuthProvider } from "@/context/AuthContext"; // Import the Auth context provider
+import { ClerkProvider } from '@clerk/nextjs';
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 const inter = Inter({ subsets: ["latin"] });
-import { SpeedInsights } from "@vercel/speed-insights/next"
+
 export const metadata: Metadata = {
   title: "Duo Keyboard Koalition",
   description: "Community of passionate hackers, coders, and tech enthusiasts",
@@ -17,9 +19,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.className}>
-      <body>
-        <AuthProvider> {/* Add AuthProvider here */}
+    <ClerkProvider>
+      <html lang="en" className={inter.className}>
+        <body>
           <div className="min-h-screen flex flex-col">
             <Header />
             <main>
@@ -28,8 +30,8 @@ export default function RootLayout({
             </main>
             <Footer />
           </div>
-        </AuthProvider>
-      </body>
-    </html>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
