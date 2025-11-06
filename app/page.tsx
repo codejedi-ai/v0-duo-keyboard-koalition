@@ -143,7 +143,7 @@ export default function HomePage() {
                 },
               }}
               providers={["discord"]}
-              redirectTo="http://localhost:3000/auth/callback?next=/dashboard"
+             
               onlyThirdPartyProviders={false}
               magicLink={false}
               showLinks={false}
