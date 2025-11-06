@@ -1,11 +1,13 @@
 "use client"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 import { createClient } from "@/utils/supabase/client"
 import { Auth } from "@supabase/auth-ui-react"
 import { ThemeSupa } from "@supabase/auth-ui-shared"
 import { Shield } from "lucide-react"
 import { useAuth } from "@/context/AuthContext"
+import { Button } from "@/components/ui/button"
 
 const supabase = createClient()
 
@@ -22,8 +24,8 @@ export default function HomePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="text-white">Loading...</div>
+      <div className="min-h-screen bg-[#0a0a1a] flex items-center justify-center">
+        <div className="text-cyan-400 neon-glow">Loading...</div>
       </div>
     )
   }
@@ -33,20 +35,26 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[#0a0a1a] flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="p-2 bg-[#FFA500]/20 rounded-full">
-              <div className="w-8 h-8 bg-gradient-to-br from-[#FFA500] to-[#FF8C00] rounded-full"></div>
-            </div>
-            <h1 className="text-3xl font-bold text-white italic">DUO KEYBOARD KOALITION</h1>
+            <Image
+              src="/Aurajay - NoBG.png"
+              alt="Duo Keyboard Koalition Logo"
+              width={48}
+              height={48}
+              className="w-12 h-12"
+            />
+            <h1 className="text-3xl font-bold text-white italic">
+              DUO KEYBOARD KOALITION
+            </h1>
           </div>
-          <h2 className="text-2xl font-semibold text-white mb-3">
+          <h2 className="text-2xl font-semibold text-cyan-300 mb-3">
             {isSignUp ? "Join the Koalition" : "Welcome Back"}
           </h2>
-          <p className="text-gray-400 leading-relaxed">
+          <p className="text-gray-300 leading-relaxed">
             {isSignUp
               ? "Create your account to access the community"
               : "Sign in to continue to your dashboard"}
@@ -54,29 +62,29 @@ export default function HomePage() {
         </div>
 
         {/* Auth Form Container */}
-        <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-2xl p-8 shadow-2xl">
+        <div className="bg-[#0a0a1a]/80 backdrop-blur-sm border border-cyan-500/30 rounded-2xl p-8">
           {/* Toggle Buttons */}
-          <div className="flex bg-gray-800/50 rounded-xl p-1.5 mb-8">
-            <button
+          <div className="flex bg-[#0a0a1a]/50 rounded-xl p-1.5 mb-8 border border-cyan-500/20">
+            <Button
               onClick={() => setIsSignUp(false)}
-              className={`flex-1 py-3 px-6 rounded-lg text-sm font-semibold transition-all duration-200 ${
+              className={`flex-1 ${
                 !isSignUp
-                  ? "bg-[#FFA500] text-black shadow-lg"
-                  : "text-gray-400 hover:text-white hover:bg-gray-700/50"
+                  ? "bg-cyan-500 text-black font-bold"
+                  : "bg-transparent border border-cyan-500/30 text-gray-400 hover:text-cyan-300 hover:bg-cyan-900/20"
               }`}
             >
               Sign In
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => setIsSignUp(true)}
-              className={`flex-1 py-3 px-6 rounded-lg text-sm font-semibold transition-all duration-200 ${
+              className={`flex-1 ${
                 isSignUp
-                  ? "bg-[#FFA500] text-black shadow-lg"
-                  : "text-gray-400 hover:text-white hover:bg-gray-700/50"
+                  ? "bg-cyan-500 text-black font-bold"
+                  : "bg-transparent border border-cyan-500/30 text-gray-400 hover:text-magenta-300 hover:bg-magenta-900/20"
               }`}
             >
               Sign Up
-            </button>
+            </Button>
           </div>
 
           {/* Supabase Auth Component */}
@@ -88,7 +96,7 @@ export default function HomePage() {
                 theme: ThemeSupa,
                 style: {
                   button: {
-                    background: "#FFA500",
+                    background: "#00FFFF",
                     color: "#000000",
                     borderRadius: "8px",
                     border: "none",
@@ -98,26 +106,26 @@ export default function HomePage() {
                     transition: "all 0.2s ease",
                   },
                   anchor: {
-                    color: "#FFA500",
+                    color: "#00FFFF",
                     textDecoration: "none",
                     fontSize: "14px",
                   },
                   input: {
-                    background: "#1f2937",
-                    border: "1px solid #374151",
+                    background: "#0a0a1a",
+                    border: "1px solid #00FFFF",
                     borderRadius: "8px",
                     color: "#ffffff",
                     padding: "12px 16px",
                     fontSize: "14px",
                   },
                   label: {
-                    color: "#d1d5db",
+                    color: "#00FFFF",
                     fontSize: "14px",
                     fontWeight: "500",
                     marginBottom: "6px",
                   },
                   message: {
-                    color: "#ef4444",
+                    color: "#FF00FF",
                     fontSize: "13px",
                     padding: "8px 0",
                   },
@@ -125,15 +133,16 @@ export default function HomePage() {
                     gap: "16px",
                   },
                   divider: {
-                    background: "#374151",
+                    background: "linear-gradient(90deg, transparent, #00FFFF, transparent)",
                     margin: "24px 0",
+                    height: "1px",
                   },
                 },
                 variables: {
                   default: {
                     colors: {
-                      brand: "#FFA500",
-                      brandAccent: "#FF8C00",
+                      brand: "#00FFFF",
+                      brandAccent: "#FF00FF",
                     },
                   },
                 },
@@ -147,9 +156,9 @@ export default function HomePage() {
           </div>
 
           {/* Trust Indicators */}
-          <div className="mt-6 flex items-center justify-center gap-4 text-xs text-gray-500">
+          <div className="mt-6 flex items-center justify-center gap-4 text-xs text-cyan-400/70">
             <div className="flex items-center gap-1">
-              <Shield className="w-3 h-3" />
+              <Shield className="w-3 h-3 text-cyan-400" />
               <span>Secure & Private</span>
             </div>
           </div>
