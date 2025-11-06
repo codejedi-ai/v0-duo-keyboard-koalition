@@ -4,56 +4,56 @@ import { useState } from "react"
 
 const slides = [
   {
-    title: "The Force",
+    title: "Soldering Basics",
     description:
-      "An energy field created by all living things. It surrounds us and penetrates us; it binds the galaxy together. The Jedi and Sith harness this cosmic energy through their connection to it.",
-    background: "bg-gradient-to-r from-blue-600 via-indigo-700 to-purple-800",
-    symbol: "☯️",
-    symbolName: "Balance",
+      "Learn the fundamentals of soldering switches, diodes, and other components. Master proper technique, temperature control, and troubleshooting common issues.",
+    background: "bg-gradient-to-r from-cyan-600 via-blue-700 to-indigo-800",
+    symbol: "🔌",
+    symbolName: "Soldering",
   },
   {
-    title: "English: Ether",
+    title: "PCB Assembly",
     description:
-      "Historically described as the invisible medium connecting all existence, akin to the vibe in Auraflow and the Force in the Star Wars universe.",
+      "Understand PCB layout, component placement, and assembly techniques. Learn how to read schematics and build your first custom keyboard PCB.",
     background: "bg-gradient-to-r from-purple-900 to-indigo-900",
-    symbol: "✨",
-    symbolName: "Sparkles",
+    symbol: "⚡",
+    symbolName: "Electronics",
   },
   {
-    title: "Taoism: Qi",
+    title: "Case Design",
     description:
-      "The vital life force flowing through living beings and the universe, emphasizing harmony and balance, similar to how Jedi seek balance in the Force.",
+      "Master 3D modeling and CAD design for keyboard cases. Learn about materials, manufacturing methods, and how to create ergonomic and aesthetic designs.",
     background: "bg-gradient-to-r from-green-700 to-teal-600",
-    symbol: "☯️",
-    symbolName: "Yin-Yang",
+    symbol: "🎨",
+    symbolName: "Design",
   },
   {
-    title: "Stoicism: Logos",
+    title: "Firmware Programming",
     description:
-      "The rational principle governing nature, connecting all beings through reason and universal order, much like how the Force has a will of its own.",
+      "Dive into QMK and VIA configuration. Learn to program custom keymaps, layers, and macros. Create advanced features like tap-dance and combos.",
     background: "bg-gradient-to-r from-gray-700 to-gray-900",
-    symbol: "🏛️",
-    symbolName: "Pillar",
+    symbol: "💻",
+    symbolName: "Code",
   },
   {
-    title: "Hinduism: Prana",
+    title: "Switch Modding",
     description:
-      "The life force sustaining existence, flowing through energy pathways and resonating with cosmic rhythms, comparable to how Force-sensitives can feel disturbances.",
+      "Explore switch customization techniques including lubing, filming, and spring swapping. Learn how to achieve the perfect feel and sound for your keyboard.",
     background: "bg-gradient-to-r from-orange-600 to-yellow-500",
-    symbol: "🕉️",
-    symbolName: "Om",
+    symbol: "⌨️",
+    symbolName: "Switches",
   },
   {
-    title: "Paganism: Animism",
+    title: "Keycap Design",
     description:
-      "The belief that all elements of nature possess a spiritual essence, connecting individuals to the Earth and cosmos, as Jedi connect to all living things.",
-    background: "bg-gradient-to-r from-blue-800 to-indigo-600",
-    symbol: "🌿",
-    symbolName: "Plant",
+      "Design custom keycap profiles and colorways. Learn about manufacturing processes, legends, and how to create unique aesthetic combinations.",
+    background: "bg-gradient-to-r from-pink-800 to-rose-600",
+    symbol: "🎯",
+    symbolName: "Keycaps",
   },
 ]
 
-export default function PhilosophySlideshow() {
+export default function WorkshopSlideshow() {
   const [currentSlide, setCurrentSlide] = useState(0)
 
   const nextSlide = () => {
@@ -87,7 +87,7 @@ export default function PhilosophySlideshow() {
       <div className="flex justify-between mt-6">
         <button
           onClick={prevSlide}
-          className="px-4 py-2 bg-blue-500 rounded-lg text-white hover:bg-blue-600 transition-all"
+          className="px-4 py-2 bg-cyan-500 rounded-lg text-white hover:bg-cyan-600 transition-all"
         >
           Previous
         </button>
@@ -96,14 +96,14 @@ export default function PhilosophySlideshow() {
             <span
               key={index}
               className={`w-2 h-2 rounded-full ${
-                currentSlide === index ? "bg-blue-400" : "bg-gray-600"
+                currentSlide === index ? "bg-cyan-400" : "bg-gray-600"
               }`}
             />
           ))}
         </div>
         <button
           onClick={nextSlide}
-          className="px-4 py-2 bg-blue-500 rounded-lg text-white hover:bg-blue-600 transition-all"
+          className="px-4 py-2 bg-cyan-500 rounded-lg text-white hover:bg-cyan-600 transition-all"
         >
           Next
         </button>
@@ -111,4 +111,3 @@ export default function PhilosophySlideshow() {
     </div>
   )
 }
-

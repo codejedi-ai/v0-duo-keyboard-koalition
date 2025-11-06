@@ -1,4 +1,4 @@
-import PhilosophySlideshow from "@/components/PhilosophySlideshow"
+import WorkshopSlideshow from "@/components/WorkshopSlideshow"
 
 function WorkshopIntro() {
   return (
@@ -68,7 +68,7 @@ export default function Workshop() {
         <h3 className="text-2xl font-bold mt-12 mb-6 text-center text-cyan-400">
           Workshop Topics
         </h3>
-        <PhilosophySlideshow />
+        <WorkshopSlideshow />
         <p className="text-lg leading-relaxed mt-10 text-gray-300">
           Our workshops cover a wide range of topics, from basic soldering techniques to advanced firmware customization. Each workshop is designed to be practical and immediately applicable to your building projects.
         </p>
