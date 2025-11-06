@@ -12,17 +12,23 @@ export async function GET(request: NextRequest) {
     // This prevents redirects to production when running on localhost
     const redirectUrl = new URL(next, requestUrl.origin)
     
+    // Force localhost if request is from localhost
+    const finalRedirectUrl = requestUrl.origin.includes('localhost')
+      ? new URL(next, 'http://localhost:3000')
+      : redirectUrl
+    
     // Safety check: ensure redirect URL matches request origin
-    if (redirectUrl.origin !== requestUrl.origin) {
-      console.warn(`Redirect origin mismatch: ${redirectUrl.origin} !== ${requestUrl.origin}`)
+    if (finalRedirectUrl.origin !== requestUrl.origin) {
+      console.warn(`Redirect origin mismatch: ${finalRedirectUrl.origin} !== ${requestUrl.origin}`)
       const fallbackRedirect = new URL("/", requestUrl.origin)
       return NextResponse.redirect(fallbackRedirect)
     }
     
     console.log("Request URL:", requestUrl.toString())
-    console.log("Redirect URL:", redirectUrl.toString())
+    console.log("Request origin:", requestUrl.origin)
+    console.log("Redirect URL:", finalRedirectUrl.toString())
     console.log("Next path:", next)
-    let response = NextResponse.redirect(redirectUrl)
+    let response = NextResponse.redirect(finalRedirectUrl)
 
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -40,7 +46,7 @@ export async function GET(request: NextRequest) {
                 ...options,
               })
             })
-            response = NextResponse.redirect(redirectUrl)
+            response = NextResponse.redirect(finalRedirectUrl)
             cookiesToSet.forEach(({ name, value, options }) => {
               response.cookies.set({
                 name,
@@ -60,7 +66,7 @@ export async function GET(request: NextRequest) {
       const { data: { user } } = await supabase.auth.getUser()
       
       if (user) {
-        console.log("Redirecting to:", redirectUrl.toString())
+        console.log("Redirecting to:", finalRedirectUrl.toString())
         return response
       }
     } else {

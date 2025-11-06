@@ -1,0 +1,22 @@
+"use client"
+
+import { Menu, X } from "lucide-react"
+
+export default function SidebarToggle({ 
+  isOpen, 
+  onToggle 
+}: { 
+  isOpen: boolean
+  onToggle: () => void 
+}) {
+  return (
+    <button
+      onClick={onToggle}
+      className="text-cyan-300 hover:text-cyan-200 transition-colors ml-auto"
+      aria-label="Toggle sidebar"
+    >
+      {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+    </button>
+  )
+}
+

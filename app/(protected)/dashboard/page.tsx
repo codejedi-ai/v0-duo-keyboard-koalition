@@ -1,28 +1,16 @@
-"use client"
-
 import Image from "next/image"
-import { useAuth } from "@/context/AuthContext"
-import { useRouter } from "next/navigation"
-import { useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import Loading from "@/components/Loading"
+import { createClient } from "@/utils/supabase/server"
+import { redirect } from "next/navigation"
+import SignOutButton from "@/components/SignOutButton"
 
-export default function DashboardPage() {
-  const { user, loading, signOut } = useAuth()
-  const router = useRouter()
-
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push("/")
-    }
-  }, [user, loading, router])
-
-  if (loading) {
-    return <Loading />
-  }
+export default async function DashboardPage() {
+  const supabase = await createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
   if (!user) {
-    return null
+    redirect("/")
   }
 
   return (
@@ -44,14 +32,7 @@ export default function DashboardPage() {
               <p className="text-cyan-300">Welcome to your dashboard</p>
             </div>
           </div>
-          <Button
-            onClick={async () => {
-              await signOut()
-              router.push("/")
-            }}
-          >
-            Sign Out
-          </Button>
+          <SignOutButton />
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
@@ -94,5 +75,3 @@ export default function DashboardPage() {
     </div>
   )
 }
-
-

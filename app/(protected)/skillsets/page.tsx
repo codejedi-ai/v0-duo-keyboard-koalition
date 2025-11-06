@@ -1,6 +1,6 @@
 export default function Mission() {
   return (
-    <div className="max-w-4xl mx-auto pt-20 text-white px-4">
+    <div className="max-w-4xl mx-auto pt-20 text-white">
       <h1 className="text-3xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-indigo-800">
         Our Mission
       </h1>
@@ -48,6 +48,5 @@ export default function Mission() {
         </p>
       </div>
     </div>
-  )
+  );
 }
-

@@ -8,12 +8,20 @@ export async function signInWithDiscord(baseUrl: string, windowLocationHref?: st
   
   if (windowLocationHref) {
     console.log('Discord login - window.location.href:', windowLocationHref)
+    console.log('Discord login - baseUrl (origin):', baseUrl)
   }
+  
+  // Force localhost if we're on localhost
+  const redirectUrl = baseUrl.includes('localhost') 
+    ? `http://localhost:3000/auth/callback?next=/dashboard`
+    : `${baseUrl}/auth/callback?next=/dashboard`
+  
+  console.log('Discord login - redirectTo URL:', redirectUrl)
   
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'discord',
     options: {
-      redirectTo: `${baseUrl}/auth/callback?next=/dashboard`
+      redirectTo: redirectUrl
     }
   })
 
