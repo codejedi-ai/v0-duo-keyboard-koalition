@@ -120,3 +120,47 @@ button:hover,
   border: 2px solid #FF00FF !important;
   box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
 }
+
+/* Loading animation keyframes */
+@keyframes circle-pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes circle-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes logo-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.animate-circle-pulse {
+  animation: circle-pulse 2s ease-in-out infinite;
+}
+
+.animate-circle-rotate {
+  animation: circle-rotate 3s linear infinite;
+}
+
+.animate-logo-pulse {
+  animation: logo-pulse 2s ease-in-out infinite;
+}

@@ -8,6 +8,7 @@ import { ThemeSupa } from "@supabase/auth-ui-shared"
 import { Shield } from "lucide-react"
 import { useAuth } from "@/context/AuthContext"
 import { Button } from "@/components/ui/button"
+import Loading from "@/components/Loading"
 
 const supabase = createClient()
 
@@ -23,11 +24,7 @@ export default function HomePage() {
   }, [user, loading, router])
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-[#0a0a1a] flex items-center justify-center">
-        <div className="text-cyan-400 neon-glow">Loading...</div>
-      </div>
-    )
+    return <Loading />
   }
 
   if (user) {

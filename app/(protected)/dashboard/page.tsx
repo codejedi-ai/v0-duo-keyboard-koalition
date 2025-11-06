@@ -5,6 +5,7 @@ import { useAuth } from "@/context/AuthContext"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
+import Loading from "@/components/Loading"
 
 export default function DashboardPage() {
   const { user, loading, signOut } = useAuth()
@@ -17,11 +18,7 @@ export default function DashboardPage() {
   }, [user, loading, router])
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-[#0a0a1a] flex items-center justify-center">
-        <div className="text-cyan-400 neon-glow">Loading...</div>
-      </div>
-    )
+    return <Loading />
   }
 
   if (!user) {
