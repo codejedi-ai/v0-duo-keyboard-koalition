@@ -1,21 +1,18 @@
 "use client"
 
 import { createContext, useContext, type ReactNode, useState, useEffect } from "react"
-import { supabase } from "@/utils/authClient"
-import type { UserDetails } from "@/types/UserDetails"
-import { signInWithDiscord, signInWithGoogle } from "@/app/(auth-pages)/sign-in/action"
+import { createClient } from "@/utils/supabase/client"
+import type { User } from "@supabase/supabase-js"
 
 // Types for AuthContext
 interface AuthContextType {
   // State
-  user: UserDetails | null
+  user: User | null
   loading: boolean
   error: string | null
   isAuthenticated: boolean
 
   // Actions
-  signInWithDiscord: () => Promise<void>
-  signInWithGoogle: () => Promise<void>
   signOut: () => Promise<void>
   refreshUser: () => Promise<void>
 }
@@ -30,9 +27,10 @@ interface AuthProviderProps {
 
 // AuthProvider Component
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<UserDetails | null>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
+  const supabase = createClient()
 
   // Derived state
   const isAuthenticated = !!user
@@ -49,7 +47,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         } = await supabase.auth.getSession()
 
         if (session?.user) {
-          setUser(session.user as UserDetails)
+          setUser(session.user)
           console.log("User authenticated:", session.user.id)
         } else {
           setUser(null)
@@ -72,7 +70,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       console.log("Auth state changed:", event)
 
       if (session?.user) {
-        setUser(session.user as UserDetails)
+        setUser(session.user)
       } else {
         setUser(null)
       }
@@ -84,7 +82,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     return () => {
       subscription?.unsubscribe()
     }
-  }, [])
+  }, [supabase])
 
   // Sign out
   const handleSignOut = async () => {
@@ -120,7 +118,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
 
       if (currentUser) {
-        setUser(currentUser as UserDetails)
+        setUser(currentUser)
       }
     } catch (error) {
       console.error("Error refreshing user:", error)
@@ -136,8 +134,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     loading,
     error,
     isAuthenticated,
-    signInWithDiscord,
-    signInWithGoogle,
     signOut: handleSignOut,
     refreshUser,
   }
@@ -153,3 +149,4 @@ export function useAuth(): AuthContextType {
   }
   return context
 }
+

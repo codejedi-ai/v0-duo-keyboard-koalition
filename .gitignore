@@ -2,13 +2,9 @@
 
 # dependencies
 /node_modules
-/.pnpm
-.npm
-.yarn/cache
-.yarn/unplugged
-.yarn/build-state.yml
+/.pnp
+.pnp.js
 .yarn/install-state.gz
-.pnp.*
 
 # testing
 /coverage
@@ -31,10 +27,6 @@ yarn-error.log*
 
 # local env files
 .env*.local
-.env
-.env.development.local
-.env.test.local
-.env.production.local
 
 # vercel
 .vercel
@@ -42,12 +34,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+.aider*
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
+# Environment variables
+.env
 
-# OS
-Thumbs.db
+# Python
+__pycache__/
+*.py[cod]
+*$py.class

@@ -1,39 +1,38 @@
-import type React from "react"
-import "@/app/globals.css"
-import Footer from "@/components/Footer"
-import Header from "@/components/Header"
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import { AuthProvider } from "@/context/AuthContext"
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import type { Metadata } from "next";
+import localFont from "next/font/local";
+import "./globals.css";
+import { AuthProvider } from "@/context/AuthContext";
 
-const inter = Inter({ subsets: ["latin"] })
+const geistSans = localFont({
+  src: "./fonts/GeistVF.woff",
+  variable: "--font-geist-sans",
+  weight: "100 900",
+});
+const geistMono = localFont({
+  src: "./fonts/GeistMonoVF.woff",
+  variable: "--font-geist-mono",
+  weight: "100 900",
+});
 
 export const metadata: Metadata = {
-  title: "Kintrace - Preserve Your Family's Cultural Legacy",
-  description: "A social network for families focused on preserving cultural legacies through AI-assisted storytelling",
-  generator: "v0.dev",
-}
+  title: "Duo Keyboard Koalition",
+  description: "Duo Keyboard Koalition — community hub for keyboard creators and players",
+};
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode
-}) {
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html lang="en" className={`${inter.className} dark`}>
-      <body className="bg-black text-white">
+    <html lang="en" className="dark">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-black text-white`}
+      >
         <AuthProvider>
-          <div className="min-h-screen flex flex-col bg-black">
-            <Header />
-            <main className="flex-1">
-              {children}
-              <SpeedInsights />
-            </main>
-            <Footer />
-          </div>
+          {children}
         </AuthProvider>
       </body>
     </html>
-  )
+  );
 }
