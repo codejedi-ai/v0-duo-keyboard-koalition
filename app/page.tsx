@@ -1,28 +1,38 @@
+"use client"
+
 import Image from "next/image"
 import { Shield } from "lucide-react"
-import { createClient } from "@/utils/supabase/server"
-import { redirect } from "next/navigation"
+import { useAuth } from "@/context/AuthContext"
+import { useRouter, useSearchParams } from "next/navigation"
+import { useEffect, Suspense } from "react"
 import AuthForm from "@/components/AuthForm"
 
-export default async function HomePage({
-  searchParams,
-}: {
-  searchParams: Promise<{ error?: string; message?: string; view?: string }>
-}) {
-  const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+function HomePageContent() {
+  const { user, loading } = useAuth()
+  const router = useRouter()
+  const searchParams = useSearchParams()
 
-  // Redirect to dashboard if already logged in
-  if (user) {
-    redirect("/dashboard")
+  useEffect(() => {
+    if (!loading && user) {
+      router.replace("/dashboard")
+    }
+  }, [user, loading, router])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#0a0a1a] flex items-center justify-center">
+        <div className="text-cyan-300">Loading...</div>
+      </div>
+    )
   }
 
-  const params = await searchParams
-  const error = params.error ? decodeURIComponent(params.error) : null
-  const message = params.message ? decodeURIComponent(params.message) : null
-  const view = params.view === "signup" ? "signup" : "signin"
+  if (user) {
+    return null
+  }
+
+  const error = searchParams.get("error") ? decodeURIComponent(searchParams.get("error")!) : null
+  const message = searchParams.get("message") ? decodeURIComponent(searchParams.get("message")!) : null
+  const view = searchParams.get("view") === "signup" ? "signup" : "signin"
 
   return (
     <div className="min-h-screen bg-[#0a0a1a] flex items-center justify-center px-4">
@@ -65,5 +75,17 @@ export default async function HomePage({
         </div>
       </div>
     </div>
+  )
+}
+
+export default function HomePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-[#0a0a1a] flex items-center justify-center">
+        <div className="text-cyan-300">Loading...</div>
+      </div>
+    }>
+      <HomePageContent />
+    </Suspense>
   )
 }

@@ -1,16 +1,36 @@
-import Image from "next/image"
-import { createClient } from "@/utils/supabase/server"
-import { redirect } from "next/navigation"
-import SignOutButton from "@/components/SignOutButton"
+"use client"
 
-export default async function DashboardPage() {
-  const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+import Image from "next/image"
+import { useAuth } from "@/context/AuthContext"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
+import { Button } from "@/components/ui/button"
+
+export default function DashboardPage() {
+  const { user, loading, signOut } = useAuth()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/")
+    }
+  }, [user, loading, router])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#0a0a1a] flex items-center justify-center">
+        <div className="text-cyan-300">Loading...</div>
+      </div>
+    )
+  }
 
   if (!user) {
-    redirect("/")
+    return null
+  }
+
+  const handleSignOut = async () => {
+    await signOut()
+    router.push("/")
   }
 
   return (
@@ -32,7 +52,9 @@ export default async function DashboardPage() {
               <p className="text-cyan-300">Welcome to your dashboard</p>
             </div>
           </div>
-          <SignOutButton />
+          <Button onClick={handleSignOut}>
+            Sign Out
+          </Button>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
