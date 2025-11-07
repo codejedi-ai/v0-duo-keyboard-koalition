@@ -2,20 +2,19 @@
 
 import Image from "next/image"
 import { useAuth } from "@/context/AuthContext"
-import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import Loading from "@/components/Loading"
 
 export default function DashboardPage() {
   const { user, loading, signOut } = useAuth()
-  const router = useRouter()
 
   useEffect(() => {
     if (!loading && !user) {
-      router.push("/")
+      // Redirect to unauthorized page if not authenticated
+      window.location.href = "/unauthorized"
     }
-  }, [user, loading, router])
+  }, [user, loading])
 
   if (loading) {
     return <Loading />
@@ -27,7 +26,7 @@ export default function DashboardPage() {
 
   const handleSignOut = async () => {
     await signOut()
-    router.push("/")
+    window.location.href = "/"
   }
 
   return (

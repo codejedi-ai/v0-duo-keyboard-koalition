@@ -4,8 +4,8 @@ import { createServerClient } from "@supabase/ssr"
 export async function middleware(request: NextRequest) {
   const { pathname } = new URL(request.url)
 
-  // Public routes - only home page and auth callback
-  const publicPaths = ["/", "/auth/callback"]
+  // Public routes - only home page, auth callback, and unauthorized page
+  const publicPaths = ["/", "/auth/callback", "/unauthorized"]
   const isPublic =
     publicPaths.some((p) => pathname === p) ||
     pathname.startsWith("/_next/") ||
@@ -74,9 +74,9 @@ export async function middleware(request: NextRequest) {
     return response
   }
 
-  // For protected routes, redirect to home if not authenticated
+  // For protected routes, redirect to unauthorized page if not authenticated
   if (!user) {
-    return NextResponse.redirect(new URL("/", request.url))
+    return NextResponse.redirect(new URL("/unauthorized", request.url))
   }
 
   return response

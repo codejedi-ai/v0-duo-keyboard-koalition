@@ -3,21 +3,21 @@
 import Image from "next/image"
 import { Shield } from "lucide-react"
 import { useAuth } from "@/context/AuthContext"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 import { useEffect, Suspense } from "react"
 import AuthForm from "@/components/AuthForm"
 import Loading from "@/components/Loading"
 
 function HomePageContent() {
   const { user, loading } = useAuth()
-  const router = useRouter()
   const searchParams = useSearchParams()
 
   useEffect(() => {
     if (!loading && user) {
-      router.replace("/dashboard")
+      // Use window.location for more reliable redirects in production
+      window.location.href = "/dashboard"
     }
-  }, [user, loading, router])
+  }, [user, loading])
 
   if (loading) {
     return <Loading />

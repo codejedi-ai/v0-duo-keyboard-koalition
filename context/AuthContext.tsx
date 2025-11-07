@@ -94,11 +94,24 @@ export function AuthProvider({ children }: AuthProviderProps) {
         throw error
       }
 
+      // Flush auth context completely
       setUser(null)
       setError(null)
+      
+      // Clear any client-side storage
+      if (typeof window !== 'undefined') {
+        localStorage.clear()
+        sessionStorage.clear()
+      }
     } catch (error) {
       console.error("Error signing out:", error)
       setError(error instanceof Error ? error.message : "Sign out error")
+      // Still clear state even if signOut fails
+      setUser(null)
+      if (typeof window !== 'undefined') {
+        localStorage.clear()
+        sessionStorage.clear()
+      }
     } finally {
       setLoading(false)
     }
