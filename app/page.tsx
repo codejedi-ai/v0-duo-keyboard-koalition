@@ -6,6 +6,7 @@ import { useAuth } from "@/context/AuthContext"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, Suspense } from "react"
 import AuthForm from "@/components/AuthForm"
+import Loading from "@/components/Loading"
 
 function HomePageContent() {
   const { user, loading } = useAuth()
@@ -19,11 +20,7 @@ function HomePageContent() {
   }, [user, loading, router])
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-[#0a0a1a] flex items-center justify-center">
-        <div className="text-cyan-300">Loading...</div>
-      </div>
-    )
+    return <Loading />
   }
 
   if (user) {
@@ -80,11 +77,7 @@ function HomePageContent() {
 
 export default function HomePage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-[#0a0a1a] flex items-center justify-center">
-        <div className="text-cyan-300">Loading...</div>
-      </div>
-    }>
+    <Suspense fallback={<Loading />}>
       <HomePageContent />
     </Suspense>
   )
